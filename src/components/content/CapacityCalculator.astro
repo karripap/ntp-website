@@ -1,0 +1,307 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Eyebrow from "@/components/typography/Eyebrow.astro";
+import Range from "@/components/form/Range.astro";
+
+type Props = HTMLAttributes<"div"> & {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** Label above the readout. */
+  label?: string;
+  /** Slider label. */
+  outputLabel?: string;
+  /** Note under the equation. */
+  note?: string;
+  /**
+   * Energy capacity in MWh.
+   *
+   * @min 1
+   * @int
+   */
+  capacity?: number;
+  /**
+   * Lowest output in MW.
+   *
+   * @min 1
+   * @int
+   */
+  min?: number;
+  /**
+   * Highest output in MW.
+   *
+   * @min 1
+   * @int
+   */
+  max?: number;
+  /**
+   * Output interval in MW.
+   *
+   * @min 1
+   * @int
+   */
+  step?: number;
+  /**
+   * Starting output in MW. Defaults to `max`.
+   *
+   * @min 1
+   * @int
+   */
+  value?: number;
+};
+
+const {
+  render = true,
+  label = "Nominal discharge duration",
+  outputLabel = "Portfolio output",
+  note = "Illustrative calculation: capacity ÷ output. Nominal figures exclude losses, reserves and operating limits.",
+  capacity = 160,
+  min = 10,
+  max = 40,
+  step = 5,
+  value,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const start = value ?? max;
+const format = (hours: number) =>
+  Number.isInteger(hours) ? String(hours) : hours.toFixed(1);
+const hours = format(capacity / start);
+const bars = Math.max(1, Math.ceil(capacity / min));
+---
+
+{
+  render && capacity > 0 && min > 0 && (
+    <div
+      class:list={["capacity-calculator_wrap", "theme-dark", className]}
+      data-capacity={capacity}
+      {...rest}
+    >
+      <div class="capacity-calculator_top">
+        <Eyebrow tag="span">{label}</Eyebrow>
+        <span class="capacity-calculator_tag">
+          <span aria-hidden="true">↔</span> Explore
+        </span>
+      </div>
+
+      <div class="capacity-calculator_readout">
+        <output class="capacity-calculator_hours" for="capacity-power">
+          {hours}
+        </output>
+        <span>hours</span>
+      </div>
+
+      <div class="capacity-calculator_timeline" aria-hidden="true">
+        {Array.from({ length: bars }, () => (
+          <span />
+        ))}
+      </div>
+      <div class="capacity-calculator_axis">
+        <span>0 h</span>
+        <span class="capacity-calculator_axis-hours">{hours} h</span>
+      </div>
+
+      <div class="capacity-calculator_control">
+        <Range
+          label={outputLabel}
+          id="capacity-power"
+          name="power"
+          unit="MW"
+          min={min}
+          max={max}
+          step={step}
+          value={start}
+          aria-describedby="capacity-note"
+          aria-valuetext={`${start} megawatts, ${hours} hours nominal duration`}
+        />
+      </div>
+
+      <div class="capacity-calculator_equation">
+        <span>{capacity} MWh</span>
+        <span>÷</span>
+        <span class="capacity-calculator_equation-power">{start} MW</span>
+        <span>=</span>
+        <span class="capacity-calculator_equation-hours">{hours} hours</span>
+      </div>
+      <p class="capacity-calculator_note" id="capacity-note">
+        {note}
+      </p>
+    </div>
+  )
+}
+
+<script>
+  for (const calculator of document.querySelectorAll<HTMLElement>(
+    ".capacity-calculator_wrap",
+  )) {
+    const input =
+      calculator.querySelector<HTMLInputElement>("input[type=range]");
+    if (!input) continue;
+
+    const capacity = Number(calculator.dataset.capacity);
+    const set = (selector: string, text: string) => {
+      for (const node of calculator.querySelectorAll(selector)) {
+        node.textContent = text;
+      }
+    };
+
+    const update = () => {
+      const power = Number(input.value);
+      const hours = capacity / power;
+      const shown = Number.isInteger(hours) ? String(hours) : hours.toFixed(1);
+
+      set(".capacity-calculator_hours", shown);
+      set(".capacity-calculator_axis-hours", `${shown} h`);
+      set(".capacity-calculator_equation-power", `${power} MW`);
+      set(".capacity-calculator_equation-hours", `${shown} hours`);
+      input.setAttribute(
+        "aria-valuetext",
+        `${power} megawatts, ${shown} hours nominal duration`,
+      );
+    };
+
+    input.addEventListener("input", update);
+    update();
+  }
+</script>
+
+<style is:global>
+  @layer components {
+    .capacity-calculator_wrap {
+      min-width: 0;
+      width: 100%;
+      padding: 2.125rem 2.25rem;
+      border-radius: var(--radius-main);
+      @media (width < 64rem) {
+        padding: 2.125rem;
+      }
+      @media (width < 30rem) {
+        padding: 1.625rem 1.375rem;
+      }
+    }
+
+    .capacity-calculator_top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.875rem;
+      @media (width < 30rem) {
+        gap: 0.5rem;
+      }
+    }
+
+    .capacity-calculator_tag {
+      display: flex;
+      align-items: center;
+      gap: 0.3125rem;
+      padding: 0.3125rem 0.4375rem;
+      font-size: 0.5625rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #d9e7de;
+      border: var(--border-width) solid rgb(255 255 255 / 0.15);
+      border-radius: 0.25rem;
+      & > span {
+        font-size: 0.75rem;
+      }
+      @media (width < 30rem) {
+        gap: 0.1875rem;
+        padding: 0.25rem;
+        font-size: 0.4375rem;
+      }
+    }
+
+    .capacity-calculator_readout {
+      display: flex;
+      align-items: baseline;
+      gap: 1.0625rem;
+      margin: 1.5625rem 0 2rem;
+      & > span {
+        font-size: 1.5rem;
+        color: var(--text-2);
+      }
+      @media (width < 30rem) {
+        gap: 0.75rem;
+        margin-block: 1.625rem;
+        & > span {
+          font-size: 1.375rem;
+        }
+      }
+    }
+
+    .capacity-calculator_hours {
+      font-family: var(--secondary-family);
+      font-size: 7.75rem;
+      line-height: 0.9;
+      letter-spacing: -0.125rem;
+      font-variant-numeric: lining-nums;
+      @media (width < 64rem) {
+        font-size: 7.25rem;
+      }
+      @media (width < 30rem) {
+        font-size: 6.875rem;
+      }
+    }
+
+    .capacity-calculator_timeline {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: 0.25rem;
+      height: 3rem;
+      & > span {
+        border-radius: 0.125rem;
+        background-color: var(--brand-300);
+        &:nth-child(4n) {
+          background-color: #7b9986;
+        }
+      }
+      @media (width < 30rem) {
+        gap: 0.1875rem;
+        height: 2.5rem;
+      }
+    }
+
+    .capacity-calculator_axis {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5625rem;
+      font-size: 0.625rem;
+      color: var(--text-3);
+      @media (width < 30rem) {
+        font-size: 0.5625rem;
+      }
+    }
+
+    .capacity-calculator_control {
+      margin-top: 1.875rem;
+    }
+
+    .capacity-calculator_equation {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.625rem;
+      margin-top: 1.1875rem;
+      padding: 1.375rem 0 1rem;
+      font-size: 0.75rem;
+      color: var(--text-2);
+      border-block: var(--border-width) solid var(--border);
+      & > span:nth-child(2n) {
+        color: var(--text-3);
+      }
+      @media (width < 30rem) {
+        gap: 0.375rem;
+        font-size: 0.625rem;
+      }
+    }
+
+    .capacity-calculator_note {
+      margin-top: 1.125rem;
+      font-size: 0.625rem;
+      line-height: 1.6;
+      color: var(--text-3);
+      text-box: none;
+    }
+  }
+</style>

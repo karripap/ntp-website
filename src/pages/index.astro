@@ -1,41 +1,262 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/wrapper/Section.astro";
-import Heading from "@/components/typography/Heading.astro";
-import Eyebrow from "@/components/typography/Eyebrow.astro";
-import Img from "@/components/media/Img.astro";
-import lumos_background from "@/assets/graphics/lumos-background.svg";
-import Icon from "@/components/media/Icon.astro";
-import logo_icon from "@/assets/logo/logo-icon.svg";
 import ContentWrapper from "@/components/wrapper/ContentWrapper.astro";
+import Grid from "@/components/wrapper/Grid.astro";
+import ButtonWrapper from "@/components/wrapper/ButtonWrapper.astro";
+import Eyebrow from "@/components/typography/Eyebrow.astro";
+import Heading from "@/components/typography/Heading.astro";
+import Paragraph from "@/components/typography/Paragraph.astro";
+import Button from "@/components/Button.astro";
+import Img from "@/components/media/Img.astro";
+import Overlay from "@/components/media/Overlay.astro";
+import Accordion from "@/components/interactive/Accordion.astro";
+import AccordionItem from "@/components/interactive/AccordionItem.astro";
+import PortfolioExplorer from "@/components/content/PortfolioExplorer.astro";
+import CapacityCalculator from "@/components/content/CapacityCalculator.astro";
+import TechnologyDrawing from "@/components/content/TechnologyDrawing.astro";
+import SpecList from "@/components/content/SpecList.astro";
+import battery_landscape from "@/assets/images/battery-landscape.png";
+import { PORTFOLIO_ASSETS, PORTFOLIO_LOCATIONS } from "@/data/portfolio.ts";
+import { CONTACT_EMAIL } from "@/consts.ts";
+
+const mailto = (subject: string) =>
+  `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 ---
 
-<Layout theme="dark">
+<Layout
+  title="160 MWh battery portfolio in Bulgaria"
+  description="NTP Consulting's 160 MWh battery portfolio in Bulgaria. Four grid-connected battery sites with 40 MW of combined power."
+  overlap={true}
+>
+  <!-- hero -->
   <Section
-    paddingBottom="even"
-    containerClass="flex-grow"
-    paddingTop="even"
-    class="flex-grow"
-    style="min-height: calc(100svh - var(--nav-height));"
+    theme="dark"
+    paddingTop="navoverlap"
+    class="justify-content-end"
+    aria-label="Introduction"
+    paddingBottom="navoverlap"
   >
-    <ContentWrapper
-      class="flex-grow theme-brand"
-      variant="card"
-      mediaOpacity={100}
-    >
-      <Icon src={logo_icon} variant="large" />
-      <Heading variant="display" tag="h1" class="margin-block-8"
-        >Style Guide</Heading
+    <Img
+      slot="background"
+      src={battery_landscape}
+      alt="Concept visualisation of a battery storage facility in a Bulgarian countryside setting"
+      loading="eager"
+      fetchPriority="high"
+      style="object-position: 65% center;"
+    />
+    <Overlay slot="background" variant="gradient" strength={55} />
+    <ContentWrapper>
+      <Heading tag="h1" variant="display"
+        >160 MWh battery portfolio<br /> in Bulgaria</Heading
       >
-      <Eyebrow variant="tag">v1.0.0</Eyebrow>
-      <Img
+      <Paragraph variant="large" maxWidth={36}
+        >Four grid-connected battery sites with 40 MW of combined power</Paragraph
+      >
+      <ButtonWrapper>
+        <Button element="link" href="#portfolio" trail="→"
+          >Explore the portfolio</Button
+        >
+      </ButtonWrapper>
+    </ContentWrapper>
+  </Section>
+
+  <!-- at a glance -->
+  <Section
+    paddingTop="small"
+    paddingBottom="small"
+    containerClass="max-width-small"
+    aria-label="Portfolio at a glance"
+  >
+    <Grid xsmall={2} medium={4}>
+      <ContentWrapper centered={true}>
+        <Paragraph variant="h2">40<small>MW</small></Paragraph>
+        <Paragraph variant="small" class="color-faded"
+          >Aggregate power</Paragraph
+        >
+      </ContentWrapper>
+      <ContentWrapper centered={true}>
+        <Paragraph variant="h2">160<small>MWh</small></Paragraph>
+        <Paragraph variant="small" class="color-faded"
+          >Storage capacity</Paragraph
+        >
+      </ContentWrapper>
+      <ContentWrapper centered={true}>
+        <Paragraph variant="h2">4<small>hours</small></Paragraph>
+        <Paragraph variant="small" class="color-faded"
+          >Nominal duration at rated power</Paragraph
+        >
+      </ContentWrapper>
+      <ContentWrapper centered={true}>
+        <Paragraph variant="h2">04<small>assets</small></Paragraph>
+        <Paragraph variant="small" class="color-faded"
+          >One Bulgarian portfolio</Paragraph
+        >
+      </ContentWrapper>
+    </Grid>
+  </Section>
+
+  <!-- portfolio -->
+  <Section id="portfolio" aria-labelledby="portfolio-title">
+    <ContentWrapper centered={true}>
+      <Eyebrow>01 / The portfolio</Eyebrow>
+      <Heading id="portfolio-title"
+        >Four sites in three<br /> regions of Bulgaria</Heading
+      >
+      <Paragraph class="color-faded" maxWidth={64}
+        >Spreading the capacity across the west, the southwest and the east
+        means each site connects to a different part of the grid, so a fault in
+        one area doesn’t stop the whole portfolio.</Paragraph
+      >
+    </ContentWrapper>
+    <PortfolioExplorer
+      assets={PORTFOLIO_ASSETS}
+      locations={PORTFOLIO_LOCATIONS}
+      mapSummary="3 locations / 4 assets"
+      mapNote="Western to eastern Bulgaria"
+    />
+  </Section>
+
+  <!-- capacity -->
+  <Section
+    id="capacity"
+    class="background-2"
+    containerClass="max-width-small"
+    aria-labelledby="capacity-title"
+  >
+    <ContentWrapper variant="columns">
+      <Eyebrow>02 / The capacity</Eyebrow>
+      <Heading id="capacity-title" variant="h1"
+        >Why invest in<br /> battery storage<br /> in Bulgaria</Heading
+      >
+      <Paragraph variant="large" class="color-faded"
+        >160 MWh is more than a number.<br /> It is power with time on its side.</Paragraph
+      >
+      <Paragraph variant="small" class="color-faded" maxWidth={44}
+        >At the portfolio’s rated 40 MW, that means four hours of nominal
+        storage. Explore how the same energy capacity translates at a lower
+        output.</Paragraph
+      >
+      <CapacityCalculator slot="column2" class="theme-brand" />
+    </ContentWrapper>
+  </Section>
+
+  <!-- technology -->
+  <Section id="technology" aria-labelledby="technology-title">
+    <ContentWrapper variant="auto-width">
+      <Eyebrow>03 / The technology</Eyebrow>
+      <Heading id="technology-title">Serious infrastructure.</Heading>
+      <Paragraph slot="column2" variant="small" class="color-faded"
+        >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
+        consistent portfolio foundation.</Paragraph
+      >
+    </ContentWrapper>
+    <ContentWrapper variant="columns" reverse>
+      <Accordion single={false}>
+        <AccordionItem
+          variant="card"
+          index="01"
+          heading="Liquid-cooled battery storage"
+          open={true}
+        >
+          <Paragraph
+            >CRRC CESS-L5016-0.25C centralized energy storage systems form the
+            battery foundation across the portfolio.</Paragraph
+          >
+          <SpecList
+            items={[
+              { label: "Manufacturer", value: "CRRC Corporation Ltd." },
+              { label: "System type", value: "Centralized, liquid-cooled" },
+            ]}
+          />
+        </AccordionItem>
+        <AccordionItem variant="card" index="02" heading="Power conversion">
+          <Paragraph
+            >Power conversion systems manage the exchange of electricity between
+            the batteries and the AC system.</Paragraph
+          >
+          <SpecList
+            items={[
+              { label: "Bansko 1", value: "2 × CRRC e-Station-5000" },
+              { label: "Bansko 2", value: "1 × CRRC e-Station-10000" },
+              { label: "Kableshkovo", value: "8 × Sineng EH-1250-HB-UD" },
+              { label: "Slivnitsa", value: "2 × CRRC e-Station-5000" },
+            ]}
+          />
+        </AccordionItem>
+        <AccordionItem
+          variant="card"
+          index="03"
+          heading="Commissioning & milestones"
+        >
+          <Paragraph
+            >All four assets are reported to have completed the mandatory
+            72-hour commissioning tests.</Paragraph
+          >
+          <SpecList
+            items={[
+              { label: "Kableshkovo", value: "Commercial operation achieved" },
+            ]}
+          />
+          <Paragraph
+            >Bansko 1, Bansko 2 and Slivnitsa had a scheduled commercial
+            operation date of 15 August 2026 in the supplied overview. Their
+            current commercial status requires confirmation.</Paragraph
+          >
+          <ButtonWrapper marginTop="4">
+            <Button
+              element="link"
+              variant="link"
+              href={mailto("NTP portfolio | Latest project milestones")}
+              trail="↗"
+            >
+              Request the latest milestones
+            </Button>
+          </ButtonWrapper>
+        </AccordionItem>
+      </Accordion>
+      <TechnologyDrawing
         slot="column2"
-        src={lumos_background}
-        width={1920}
-        height={1080}
-        loading="eager"
-        fetchPriority="high"
+        tag="0.25C"
+        model="CRRC CESS-L5016-0.25C"
       />
+    </ContentWrapper>
+  </Section>
+
+  <!-- perspective -->
+  <Section
+    paddingTop="none"
+    paddingBottom="none"
+    aria-label="Energy perspective"
+  >
+    <ContentWrapper variant="card" class="theme-brand">
+      <Eyebrow>Made for a more flexible grid</Eyebrow>
+      <Paragraph variant="display" class="margin-top-5"
+        >Invest in the<br /> future of energy</Paragraph
+      >
+    </ContentWrapper>
+  </Section>
+
+  <!-- contact -->
+  <Section
+    id="contact"
+    containerClass="max-width-small"
+    aria-labelledby="contact-title"
+  >
+    <ContentWrapper variant="auto-width">
+      <Heading id="contact-title" variant="display"
+        >Let’s talk<br /> potential.</Heading
+      >
+      <Paragraph slot="column2" class="color-faded"
+        >Explore the portfolio.<br />Get closer to the detail.</Paragraph
+      >
+      <ButtonWrapper slot="column2" marginTop="4">
+        <Button
+          element="link"
+          href={mailto("NTP | 160 MWh battery portfolio")}
+          trail="↗">{CONTACT_EMAIL}</Button
+        >
+      </ButtonWrapper>
     </ContentWrapper>
   </Section>
 </Layout>

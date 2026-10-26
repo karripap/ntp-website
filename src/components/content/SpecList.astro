@@ -1,0 +1,63 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Spec = {
+  /** Row label. */
+  label: string;
+  /** Row value. */
+  value: string;
+};
+
+type Props = HTMLAttributes<"dl"> & {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** Rows to list, in order. */
+  items?: Spec[];
+};
+
+const { render = true, items = [], class: className, ...rest } = Astro.props;
+---
+
+{
+  render && items.length > 0 && (
+    <dl class:list={["spec-list_wrap", className]} {...rest}>
+      {items.map((item) => (
+        <div class="spec-list_row">
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .spec-list_wrap {
+      margin-block: 1rem;
+    }
+
+    .spec-list_row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 1.125rem;
+      padding-block: 0.75rem;
+      border-top: var(--border-width) solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-3);
+      & dd {
+        margin: 0;
+        color: var(--text);
+        text-align: right;
+      }
+      @media (width < 30rem) {
+        gap: 0.875rem;
+        font-size: 0.6875rem;
+        & dt {
+          max-width: 42%;
+        }
+      }
+    }
+  }
+</style>

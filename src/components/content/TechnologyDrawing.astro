@@ -1,0 +1,225 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Eyebrow from "@/components/typography/Eyebrow.astro";
+
+type Props = HTMLAttributes<"figure"> & {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** Label above the drawing. */
+  label?: string;
+  /** Tag beside the label. */
+  tag?: string;
+  /** System name under the drawing. */
+  model?: string;
+  /** Caption beside the system name. */
+  caption?: string;
+};
+
+const {
+  render = true,
+  label = "The storage system",
+  tag,
+  model,
+  caption = "Illustrative system drawing",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+{
+  render && (
+    <figure class:list={["technology-drawing_wrap", className]} {...rest}>
+      <div class="technology-drawing_bar">
+        <Eyebrow tag="span">{label}</Eyebrow>
+        {tag && (
+          <Eyebrow tag="span" variant="tag">
+            {tag}
+          </Eyebrow>
+        )}
+      </div>
+      <svg
+        class="technology-drawing_drawing"
+        viewBox="0 0 660 390"
+        role="img"
+        aria-labelledby="technology-drawing-title"
+      >
+        <title id="technology-drawing-title">
+          Stylised battery container illustration, not an equipment
+          specification
+        </title>
+        <defs>
+          <pattern
+            id="technology-vents"
+            x="0"
+            y="0"
+            width="7"
+            height="8"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M1 0v8" stroke="#849b88" stroke-width="2" />
+          </pattern>
+          <pattern
+            id="technology-ribs"
+            width="15"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M1 0v20" stroke="#a5b2a0" stroke-width="1.6" />
+          </pattern>
+        </defs>
+        <ellipse
+          cx="345"
+          cy="318"
+          rx="250"
+          ry="23"
+          fill="#bac2ad"
+          opacity=".35"
+        />
+        <path
+          d="M98 135L455 68 574 113 215 190Z"
+          fill="#ecede3"
+          stroke="#59745f"
+          stroke-width="1.2"
+        />
+        <path
+          d="M98 135L215 190V315L98 257Z"
+          fill="#bac8b4"
+          stroke="#59745f"
+          stroke-width="1.2"
+        />
+        <path
+          d="M215 190L574 113V242L215 315Z"
+          fill="#dce2d0"
+          stroke="#59745f"
+          stroke-width="1.2"
+        />
+        <path d="M228 198L564 125V234L228 302Z" fill="url(#technology-ribs)" />
+        <path d="M112 156L147 173V246L112 229Z" fill="#375841" />
+        <path
+          d="M154 177L200 199V279L154 256Z"
+          fill="url(#technology-vents)"
+          stroke="#789277"
+        />
+        <path
+          d="M292 184L364 168V277L292 292Z M376 165L448 150V259L376 274Z M460 147L531 132V241L460 256Z"
+          fill="#d2dcc9"
+          stroke="#90a488"
+        />
+        <path
+          d="M353 212v19 M437 194v19 M520 175v19"
+          stroke="#51734e"
+          stroke-width="3"
+        />
+        <path
+          d="M121 135L456 82 547 113M144 147L478 92M169 158L501 101"
+          fill="none"
+          stroke="#b6bfac"
+        />
+        <path
+          d="M105 263L218 319 576 247"
+          stroke="#365c41"
+          stroke-width="5"
+          fill="none"
+        />
+        <path
+          class="technology-drawing_flow"
+          d="M44 290L89 310 212 368 614 285"
+          fill="none"
+          stroke="#a9c878"
+          stroke-width="2"
+          stroke-dasharray="5 5"
+        />
+        <path
+          d="M265 101V53H190M578 181H622V140"
+          fill="none"
+          stroke="#6b8167"
+        />
+        <circle cx="265" cy="101" r="3" fill="#38583d" />
+        <circle cx="578" cy="181" r="3" fill="#38583d" />
+        <text x="129" y="43">
+          MODULAR STORAGE
+        </text>
+        <text x="546" y="130">
+          ENERGY OUT
+        </text>
+      </svg>
+      <figcaption class="technology-drawing_bar is-bottom">
+        {model && <span>{model}</span>}
+        <span class="technology-drawing_caption">{caption}</span>
+      </figcaption>
+    </figure>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .technology-drawing_wrap {
+      width: 100%;
+      min-width: 0;
+      padding: 1.75rem 1.625rem 1.375rem;
+      background-color: var(--background-3);
+      border-radius: var(--radius-main);
+      overflow: hidden;
+      @media (width < 64rem) {
+        padding: 1.75rem 1.25rem;
+      }
+      @media (width < 30rem) {
+        padding: 1.375rem 0.75rem 1.125rem;
+      }
+    }
+
+    .technology-drawing_bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      &.is-bottom {
+        padding-top: 1.0625rem;
+        border-top: var(--border-width) solid #d7d3ca;
+        font-size: 0.625rem;
+        color: var(--text-2);
+      }
+      @media (width < 30rem) {
+        &.is-bottom {
+          gap: 0.5rem;
+          font-size: 0.5rem;
+        }
+      }
+    }
+
+    .technology-drawing_caption {
+      font-size: 0.5625rem;
+      color: var(--text-3);
+      text-align: right;
+      @media (width < 30rem) {
+        font-size: 0.5rem;
+      }
+    }
+
+    .technology-drawing_drawing {
+      width: 100%;
+      height: auto;
+      margin-block: 1.875rem;
+      overflow: visible;
+      & text {
+        font-size: 10px;
+        letter-spacing: 0.07em;
+        fill: #747d70;
+      }
+      @media (width < 30rem) {
+        margin-block: 1.5rem;
+      }
+    }
+
+    .technology-drawing_flow {
+      stroke: #7c9f87;
+      animation: technology-drawing-flow 12s linear infinite;
+    }
+
+    @keyframes technology-drawing-flow {
+      to {
+        stroke-dashoffset: -60;
+      }
+    }
+  }
+</style>

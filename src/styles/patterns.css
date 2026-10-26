@@ -12,6 +12,12 @@
   margin-top: 0;
 }
 
+:is(.heading, .text) small {
+  margin-left: 0.25em;
+  font-size: max(0.32em, 0.6875rem);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
 .section {
   padding-top: var(--section-space-medium);
   padding-bottom: var(--section-space-medium);

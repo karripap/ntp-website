@@ -13,15 +13,29 @@ export default defineConfig({
   ],
   fonts: [
     {
-      name: "Inter",
-      cssVariable: "--font-inter",
+      name: "DM Sans",
+      cssVariable: "--font-dm-sans",
+      provider: fontProviders.local(),
+      options: {
+        variants: [
+          {
+            weight: "100 900",
+            style: "normal",
+            src: ["./src/assets/fonts/dm-sans.woff"],
+          },
+        ],
+      },
+    },
+    {
+      name: "Instrument Serif",
+      cssVariable: "--font-instrument-serif",
       provider: fontProviders.local(),
       options: {
         variants: [
           {
             weight: 400,
             style: "normal",
-            src: ["./src/assets/fonts/inter-regular.woff2"],
+            src: ["./src/assets/fonts/instrument-serif.woff"],
           },
         ],
       },

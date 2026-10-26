@@ -327,7 +327,7 @@ const column2 = await slotContent(Astro.slots, "column2");
           z-index: 1;
           --_alignment: center;
         }
-        & > :last-child {
+        & > :last-child:not(:first-child) {
           position: absolute;
           inset: 0;
           border-radius: 0;

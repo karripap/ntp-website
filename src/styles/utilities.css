@@ -1081,3 +1081,67 @@
   inset: 0% 0% auto;
   overflow: hidden;
 }
+
+/* Parallax — scroll-driven, CSS only. Browsers without scroll timelines,
+   and visitors who prefer reduced motion, see the static layout. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Background layer that moves slower than the page. Pair with
+       `overflow-clip` on the section. */
+    .parallax-bg {
+      animation: parallax-bg linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
+
+    /* Foreground content that drifts up and fades as the page scrolls. */
+    .parallax-drift {
+      animation: parallax-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
+
+    /* Element that travels slightly faster than the page through view. */
+    .parallax-float {
+      animation: parallax-float linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    /* Panel that settles from a larger scale as it enters view. */
+    .parallax-zoom {
+      animation: parallax-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+  }
+}
+
+@keyframes parallax-bg {
+  to {
+    translate: 0 30svh;
+    scale: 1.08;
+  }
+}
+
+@keyframes parallax-drift {
+  to {
+    translate: 0 -12svh;
+    opacity: 0;
+  }
+}
+
+@keyframes parallax-float {
+  from {
+    translate: 0 var(--parallax-distance, 4rem);
+  }
+  to {
+    translate: 0 calc(var(--parallax-distance, 4rem) * -1);
+  }
+}
+
+@keyframes parallax-zoom {
+  from {
+    scale: 0.9;
+  }
+}

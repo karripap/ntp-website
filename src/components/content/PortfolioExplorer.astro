@@ -61,11 +61,14 @@ const tabIndex = (index: number) => String(index + 1).padStart(2, "0");
         >
           {assets.map((asset, index) => (
             <button
-              class="portfolio-explorer_tab"
+              class:list={[
+                "portfolio-explorer_tab",
+                asset.operational && "is-operational",
+              ]}
               type="button"
               id={`asset-tab-${asset.id}`}
               role="tab"
-              aria-label={asset.name}
+              aria-label={`${asset.name}, ${asset.status.toLowerCase()}`}
               aria-selected={index === 0 ? "true" : "false"}
               aria-controls={`asset-panel-${asset.id}`}
               tabindex={index === 0 ? 0 : -1}
@@ -203,6 +206,7 @@ const tabIndex = (index: number) => String(index + 1).padStart(2, "0");
 <style is:global>
   @layer components {
     .portfolio-explorer_wrap {
+      --portfolio-commissioned: #a38a4c;
       width: 100%;
       display: grid;
       grid-template-columns: minmax(0, 1.85fr) minmax(21.25rem, 1fr);
@@ -249,6 +253,7 @@ const tabIndex = (index: number) => String(index + 1).padStart(2, "0");
     }
 
     .portfolio-explorer_tab {
+      position: relative;
       width: 2.625rem;
       height: 2.375rem;
       border-radius: 0.375rem;
@@ -268,6 +273,19 @@ const tabIndex = (index: number) => String(index + 1).padStart(2, "0");
       &[aria-selected="true"] {
         background-color: var(--brand-500);
         color: var(--light-100);
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0.3125rem;
+        right: 0.3125rem;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 50%;
+        background-color: var(--portfolio-commissioned);
+      }
+      &.is-operational::after {
+        background-color: var(--accent-500);
       }
       @media (width < 30rem) {
         width: 2.5rem;
@@ -375,7 +393,7 @@ const tabIndex = (index: number) => String(index + 1).padStart(2, "0");
         width: 0.375rem;
         height: 0.375rem;
         border-radius: 50%;
-        background-color: #a38a4c;
+        background-color: var(--portfolio-commissioned);
       }
       &.is-operational::before {
         background-color: var(--accent-500);

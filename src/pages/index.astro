@@ -33,9 +33,9 @@ const mailto = (subject: string) =>
   <Section
     theme="dark"
     paddingTop="navoverlap"
-    class="justify-content-end"
+    class="justify-content-end overflow-clip min-height-screen"
     aria-label="Introduction"
-    paddingBottom="navoverlap"
+    paddingBottom="large"
   >
     <Img
       slot="background"
@@ -44,9 +44,10 @@ const mailto = (subject: string) =>
       loading="eager"
       fetchPriority="high"
       style="object-position: 65% center;"
+      class="parallax-bg"
     />
     <Overlay slot="background" variant="gradient" strength={55} />
-    <ContentWrapper>
+    <ContentWrapper class="parallax-drift">
       <Heading tag="h1" variant="display"
         >160 MWh battery portfolio<br /> in Bulgaria</Heading
       >
@@ -96,7 +97,6 @@ const mailto = (subject: string) =>
       assets={PORTFOLIO_ASSETS}
       locations={PORTFOLIO_LOCATIONS}
       mapSummary="3 locations / 4 assets"
-      mapNote="Western to eastern Bulgaria"
     />
   </Section>
 
@@ -118,7 +118,7 @@ const mailto = (subject: string) =>
         the portfolio’s rated 40 MW, that means four hours of nominal storage.
         Explore how the same energy capacity translates at a lower output.</Paragraph
       >
-      <CapacityCalculator slot="column2" class="theme-brand" />
+      <CapacityCalculator slot="column2" class="theme-brand parallax-float" />
     </ContentWrapper>
   </Section>
 
@@ -127,10 +127,6 @@ const mailto = (subject: string) =>
     <ContentWrapper>
       <Eyebrow>03 / The technology</Eyebrow>
       <Heading id="technology-title">Serious infrastructure.</Heading>
-      <Paragraph variant="large" class="color-faded" maxWidth={44}
-        >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
-        consistent portfolio foundation.</Paragraph
-      >
     </ContentWrapper>
     <ContentWrapper
       variant="sticky-content"
@@ -209,7 +205,7 @@ const mailto = (subject: string) =>
     paddingBottom="none"
     aria-label="Energy perspective"
   >
-    <ContentWrapper variant="card" class="theme-brand">
+    <ContentWrapper variant="card" class="theme-brand parallax-zoom">
       <Eyebrow>Made for a more flexible grid</Eyebrow>
       <Paragraph variant="display" class="margin-top-5"
         >Invest in the<br /> future of energy</Paragraph

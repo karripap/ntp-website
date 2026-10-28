@@ -16,7 +16,7 @@ export type PortfolioAsset = {
   capacity: number;
   /** Power conversion equipment. */
   equipment: string;
-  /** Reported as in commercial operation. */
+  /** Reported as in commercial operation; otherwise commissioned. */
   operational: boolean;
   /** Status line. */
   status: string;
@@ -40,10 +40,25 @@ export type PortfolioLocation = {
   labelLeft?: boolean;
 };
 
-const PENDING_NOTE =
-  "Reported milestone. Commercial operation was scheduled by 15 August 2026; current COD confirmation pending.";
+const COMMISSIONED_NOTE =
+  "The mandatory 72-hour commissioning tests have been completed. Commercial operation was scheduled by 15 August 2026; current COD confirmation pending.";
 
 export const PORTFOLIO_ASSETS: PortfolioAsset[] = [
+  {
+    id: "kableshkovo",
+    name: "Kableshkovo",
+    region: "Eastern Bulgaria",
+    location: "kableshkovo",
+    description:
+      "The eastern asset, reported as operational and generating revenue in the Bulgarian electricity market.",
+    power: 10,
+    capacity: 40,
+    equipment: "8 × Sineng Electric EH-1250-HB-UD",
+    operational: true,
+    status: "Operational",
+    statusNote:
+      "Reported as fully operational. The mandatory 72-hour commissioning tests have also been completed.",
+  },
   {
     id: "bansko1",
     name: "Bansko 1",
@@ -55,8 +70,8 @@ export const PORTFOLIO_ASSETS: PortfolioAsset[] = [
     capacity: 40,
     equipment: "2 × CRRC CEES e-Station-5000",
     operational: false,
-    status: "72-hour tests completed",
-    statusNote: PENDING_NOTE,
+    status: "Commissioned",
+    statusNote: COMMISSIONED_NOTE,
   },
   {
     id: "bansko2",
@@ -69,23 +84,8 @@ export const PORTFOLIO_ASSETS: PortfolioAsset[] = [
     capacity: 40,
     equipment: "1 × CRRC CEES e-Station-10000",
     operational: false,
-    status: "72-hour tests completed",
-    statusNote: PENDING_NOTE,
-  },
-  {
-    id: "kableshkovo",
-    name: "Kableshkovo",
-    region: "Eastern Bulgaria",
-    location: "kableshkovo",
-    description:
-      "The eastern asset, reported as operational and generating revenue in the Bulgarian electricity market.",
-    power: 10,
-    capacity: 40,
-    equipment: "8 × Sineng Electric EH-1250-HB-UD",
-    operational: true,
-    status: "Commercial operation achieved",
-    statusNote:
-      "Reported as fully operational. The mandatory 72-hour commissioning tests have also been completed.",
+    status: "Commissioned",
+    statusNote: COMMISSIONED_NOTE,
   },
   {
     id: "slivnitsa",
@@ -98,19 +98,19 @@ export const PORTFOLIO_ASSETS: PortfolioAsset[] = [
     capacity: 40,
     equipment: "2 × CRRC CEES e-Station-5000",
     operational: false,
-    status: "72-hour tests completed",
-    statusNote: PENDING_NOTE,
+    status: "Commissioned",
+    statusNote: COMMISSIONED_NOTE,
   },
 ];
 
 export const PORTFOLIO_LOCATIONS: PortfolioLocation[] = [
-  { id: "bansko", label: "Bansko", note: "02 assets", x: 26, y: 66.2 },
-  { id: "slivnitsa", label: "Slivnitsa", x: 19.2, y: 43.8 },
+  { id: "bansko", label: "Bansko", note: "02 assets", x: 26, y: 72.1 },
+  { id: "slivnitsa", label: "Slivnitsa", x: 19.2, y: 49.7 },
   {
     id: "kableshkovo",
     label: "Kableshkovo",
     x: 80.5,
-    y: 48.2,
+    y: 54.1,
     labelLeft: true,
   },
 ];

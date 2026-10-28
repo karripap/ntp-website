@@ -1,6 +1,5 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import Eyebrow from "@/components/typography/Eyebrow.astro";
 import type { PortfolioAsset, PortfolioLocation } from "@/data/portfolio.ts";
 import { uid } from "@/utils/unique-id.ts";
 
@@ -13,12 +12,8 @@ type Props = HTMLAttributes<"div"> & {
   assets?: PortfolioAsset[];
   /** Location key to highlight. */
   active?: string;
-  /** Label above the map. */
-  label?: string;
   /** Summary beside the label. */
   summary?: string;
-  /** Legend text. */
-  legend?: string;
   /** Note beside the legend. */
   note?: string;
 };
@@ -28,9 +23,7 @@ const {
   locations = [],
   assets = [],
   active,
-  label = "Bulgaria",
   summary,
-  legend = "Portfolio location",
   note,
   class: className,
   ...rest
@@ -45,8 +38,7 @@ const titleId = `${id}-title`;
   render && locations.length > 0 && (
     <div class:list={["portfolio-map_wrap", className]} {...rest}>
       <div class="portfolio-map_bar">
-        <Eyebrow tag="span">{label}</Eyebrow>
-        {summary && <span>{summary}</span>}
+        {summary && <span class="portfolio-map_summary">{summary}</span>}
       </div>
       <div class="portfolio-map_canvas">
         <svg
@@ -69,33 +61,36 @@ const titleId = `${id}-title`;
               <circle cx="1" cy="1" r=".9" fill="#c4c8b9" />
             </pattern>
           </defs>
-          <path
-            class="portfolio-map_outline"
-            d="M78 11 L88 12 106 24 120 28 120 36 105 43 101 56 110 64 125 68 150 60 166 59 181 67 194 65 207 71 225 76 240 82 253 80 266 72 280 72 296 79 319 78 330 76 339 82 350 80 368 91 380 89 393 83 404 82 419 71 432 55 447 44 461 39 477 34 508 31 528 23 550 21 560 23 571 25 584 37 595 36 610 35 619 46 630 43 640 39 646 59 659 65 677 72 697 77 710 77 710 94 714 104 705 118 696 127 684 122 669 123 659 131 650 149 640 152 643 160 639 175 637 192 640 214 637 220 621 218 618 229 608 234 611 241 595 242 591 252 607 254 613 259 613 267 621 269 623 281 617 286 637 303 650 317 638 320 627 318 620 323 609 321 600 329 589 321 582 312 571 304 561 308 550 303 540 315 523 319 509 321 500 326 498 337 485 341 474 349 474 355 463 354 450 352 442 357 444 363 454 370 453 378 458 383 454 389 457 396 449 407 439 406 424 412 412 408 402 413 389 412 380 417 368 421 357 421 342 408 326 400 314 397 307 406 300 396 288 394 281 379 272 382 264 379 252 382 242 378 232 384 232 391 218 388 211 395 200 394 185 401 170 398 155 399 144 404 138 411 111 408 112 395 110 384 112 367 119 356 116 350 110 346 105 332 102 320 88 312 73 305 63 293 49 276 59 270 60 263 66 260 69 249 57 240 57 232 62 220 57 207 62 199 73 193 81 196 92 189 94 180 107 166 116 158 114 152 105 150 96 132 88 127 79 124 66 115 62 104 59 89 53 85 48 70 49 59 52 48 53 39 68 36 76 29 75 20 Z"
-          />
-          <path
-            class="portfolio-map_dots"
-            fill={`url(#${dotsId})`}
-            d="M78 11 L120 28 101 56 125 68 166 59 207 71 240 82 280 72 330 76 368 91 404 82 447 44 508 31 550 21 584 37 610 35 619 46 640 39 646 59 677 72 710 77 714 104 696 127 669 123 650 149 637 192 640 214 618 229 595 242 591 252 613 259 623 281 617 286 650 317 620 323 600 329 571 304 550 303 540 315 509 321 498 337 474 349 450 352 442 357 454 370 458 383 457 396 449 407 424 412 402 413 368 421 357 421 326 400 307 406 288 394 281 379 252 382 242 378 232 391 218 388 200 394 185 401 155 399 138 411 111 408 110 384 112 367 119 356 105 332 102 320 73 305 49 276 69 249 57 240 62 220 57 207 73 193 81 196 94 180 116 158 114 152 105 150 96 132 66 115 59 89 48 70 53 39 68 36 76 29 Z"
-          />
-          <g class="portfolio-map_context" aria-hidden="true">
-            <text class="portfolio-map_country-name" x="342" y="140">
-              B U L G A R I A
-            </text>
-            <circle cx="177" cy="240" r="3" />
-            <text class="portfolio-map_city" x="186" y="246">
-              Sofia
-            </text>
-            <text class="portfolio-map_sea" x="688" y="242">
-              BLACK
-            </text>
-            <text class="portfolio-map_sea" x="696" y="259">
-              SEA
-            </text>
-            <path d="M100 457h80m-80-4v8m80-8v8" />
-            <text class="portfolio-map_legend" x="102" y="480">
-              INDICATIVE LOCATIONS
-            </text>
+          <g transform="translate(0 29)">
+            <path
+              class="portfolio-map_outline"
+              d="M78 11 L88 12 106 24 120 28 120 36 105 43 101 56 110 64 125 68 150 60 166 59 181 67 194 65 207 71 225 76 240 82 253 80 266 72 280 72 296 79 319 78 330 76 339 82 350 80 368 91 380 89 393 83 404 82 419 71 432 55 447 44 461 39 477 34 508 31 528 23 550 21 560 23 571 25 584 37 595 36 610 35 619 46 630 43 640 39 646 59 659 65 677 72 697 77 710 77 710 94 714 104 705 118 696 127 684 122 669 123 659 131 650 149 640 152 643 160 639 175 637 192 640 214 637 220 621 218 618 229 608 234 611 241 595 242 591 252 607 254 613 259 613 267 621 269 623 281 617 286 637 303 650 317 638 320 627 318 620 323 609 321 600 329 589 321 582 312 571 304 561 308 550 303 540 315 523 319 509 321 500 326 498 337 485 341 474 349 474 355 463 354 450 352 442 357 444 363 454 370 453 378 458 383 454 389 457 396 449 407 439 406 424 412 412 408 402 413 389 412 380 417 368 421 357 421 342 408 326 400 314 397 307 406 300 396 288 394 281 379 272 382 264 379 252 382 242 378 232 384 232 391 218 388 211 395 200 394 185 401 170 398 155 399 144 404 138 411 111 408 112 395 110 384 112 367 119 356 116 350 110 346 105 332 102 320 88 312 73 305 63 293 49 276 59 270 60 263 66 260 69 249 57 240 57 232 62 220 57 207 62 199 73 193 81 196 92 189 94 180 107 166 116 158 114 152 105 150 96 132 88 127 79 124 66 115 62 104 59 89 53 85 48 70 49 59 52 48 53 39 68 36 76 29 75 20 Z"
+            />
+            <path
+              class="portfolio-map_dots"
+              fill={`url(#${dotsId})`}
+              d="M78 11 L120 28 101 56 125 68 166 59 207 71 240 82 280 72 330 76 368 91 404 82 447 44 508 31 550 21 584 37 610 35 619 46 640 39 646 59 677 72 710 77 714 104 696 127 669 123 650 149 637 192 640 214 618 229 595 242 591 252 613 259 623 281 617 286 650 317 620 323 600 329 571 304 550 303 540 315 509 321 498 337 474 349 450 352 442 357 454 370 458 383 457 396 449 407 424 412 402 413 368 421 357 421 326 400 307 406 288 394 281 379 252 382 242 378 232 391 218 388 200 394 185 401 155 399 138 411 111 408 110 384 112 367 119 356 105 332 102 320 73 305 49 276 69 249 57 240 62 220 57 207 73 193 81 196 94 180 116 158 114 152 105 150 96 132 66 115 59 89 48 70 53 39 68 36 76 29 Z"
+            />
+            <g class="portfolio-map_context" aria-hidden="true">
+              <text
+                class="portfolio-map_country-name"
+                x="381"
+                y="221"
+                text-anchor="middle"
+              >
+                B U L G A R I A
+              </text>
+              <circle cx="177" cy="240" r="3" />
+              <text class="portfolio-map_city" x="186" y="246">
+                Sofia
+              </text>
+              <text class="portfolio-map_sea" x="688" y="242">
+                BLACK
+              </text>
+              <text class="portfolio-map_sea" x="696" y="259">
+                SEA
+              </text>
+            </g>
           </g>
         </svg>
         {locations.map((location) => {
@@ -104,30 +99,38 @@ const titleId = `${id}-title`;
             (asset) => asset.location === location.id,
           );
           const isActive = location.id === active;
+          const isOperational = here.every((asset) => asset.operational);
+          const status = isOperational ? "Operational" : "Commissioned";
           return (
             <button
               class:list={[
                 "portfolio-map_pin",
                 location.labelLeft && "is-left",
                 isActive && "is-active",
+                isOperational && "is-operational",
               ]}
               type="button"
               style={`left: ${location.x}%; top: ${location.y}%;`}
               data-tab={tab}
-              aria-label={`Explore ${location.label} ${here.length > 1 ? "assets" : "asset"}`}
+              aria-label={`Explore ${location.label} ${here.length > 1 ? "assets" : "asset"}, ${status.toLowerCase()}`}
               aria-pressed={isActive ? "true" : "false"}
             >
               <span class="portfolio-map_dot" />
               <span class="portfolio-map_pin-label">
                 {location.label}
-                {location.note && <small>{location.note}</small>}
+                <small>
+                  {location.note ? `${location.note} · ${status}` : status}
+                </small>
               </span>
             </button>
           );
         })}
       </div>
       <div class="portfolio-map_bar is-bottom">
-        <span class="portfolio-map_key">{legend}</span>
+        <span class="portfolio-map_keys">
+          <span class="portfolio-map_key is-operational">Operational</span>
+          <span class="portfolio-map_key">Commissioned</span>
+        </span>
         {note && <span class="portfolio-map_note">{note}</span>}
       </div>
     </div>
@@ -150,6 +153,7 @@ const titleId = `${id}-title`;
 <style is:global>
   @layer components {
     .portfolio-map_wrap {
+      --portfolio-commissioned: #a38a4c;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -186,15 +190,28 @@ const titleId = `${id}-title`;
       }
     }
 
+    .portfolio-map_keys {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+    }
+
+    .portfolio-map_summary {
+      margin-left: auto;
+    }
+
     .portfolio-map_key {
       display: flex;
       align-items: center;
       gap: 0.4375rem;
       &::before {
         content: "";
-        width: 0.3125rem;
-        height: 0.3125rem;
+        width: 0.4375rem;
+        height: 0.4375rem;
         border-radius: 50%;
+        background-color: var(--portfolio-commissioned);
+      }
+      &.is-operational::before {
         background-color: var(--accent-500);
       }
     }
@@ -262,14 +279,6 @@ const titleId = `${id}-title`;
       }
     }
 
-    .portfolio-map_legend {
-      font-size: 9px;
-      letter-spacing: 1px;
-      @media (width < 30rem) {
-        font-size: 12px;
-      }
-    }
-
     .portfolio-map_pin {
       position: absolute;
       display: flex;
@@ -287,8 +296,11 @@ const titleId = `${id}-title`;
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      background-color: var(--brand-500);
+      background-color: var(--portfolio-commissioned);
       border: 0.1875rem solid var(--light-200);
+      .is-operational > & {
+        background-color: var(--accent-500);
+      }
       box-shadow: 0 0 0 var(--border-width) #718573;
       transition: box-shadow var(--hover-duration) var(--hover-ease);
       .is-active > & {

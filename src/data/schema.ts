@@ -29,6 +29,7 @@ const ADDRESS = {
   "@type": "PostalAddress",
   streetAddress: "5 Oborishte Street",
   addressLocality: "Sofia",
+  postalCode: "1504",
   addressCountry: "BG",
 };
 

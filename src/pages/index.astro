@@ -2,7 +2,6 @@
 import Layout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/wrapper/Section.astro";
 import ContentWrapper from "@/components/wrapper/ContentWrapper.astro";
-import Grid from "@/components/wrapper/Grid.astro";
 import ButtonWrapper from "@/components/wrapper/ButtonWrapper.astro";
 import Eyebrow from "@/components/typography/Eyebrow.astro";
 import Heading from "@/components/typography/Heading.astro";
@@ -16,6 +15,7 @@ import PortfolioExplorer from "@/components/content/PortfolioExplorer.astro";
 import CapacityCalculator from "@/components/content/CapacityCalculator.astro";
 import TechnologyDrawing from "@/components/content/TechnologyDrawing.astro";
 import SpecList from "@/components/content/SpecList.astro";
+import StatList from "@/components/content/StatList.astro";
 import battery_landscape from "@/assets/images/battery-landscape.png";
 import { PORTFOLIO_ASSETS, PORTFOLIO_LOCATIONS } from "@/data/portfolio.ts";
 import { CONTACT_EMAIL } from "@/consts.ts";
@@ -68,32 +68,14 @@ const mailto = (subject: string) =>
     containerClass="max-width-small"
     aria-label="Portfolio at a glance"
   >
-    <Grid xsmall={2} medium={4}>
-      <ContentWrapper centered={true}>
-        <Paragraph variant="h2">40<small>MW</small></Paragraph>
-        <Paragraph variant="small" class="color-faded"
-          >Aggregate power</Paragraph
-        >
-      </ContentWrapper>
-      <ContentWrapper centered={true}>
-        <Paragraph variant="h2">160<small>MWh</small></Paragraph>
-        <Paragraph variant="small" class="color-faded"
-          >Storage capacity</Paragraph
-        >
-      </ContentWrapper>
-      <ContentWrapper centered={true}>
-        <Paragraph variant="h2">4<small>hours</small></Paragraph>
-        <Paragraph variant="small" class="color-faded"
-          >Nominal duration at rated power</Paragraph
-        >
-      </ContentWrapper>
-      <ContentWrapper centered={true}>
-        <Paragraph variant="h2">04<small>assets</small></Paragraph>
-        <Paragraph variant="small" class="color-faded"
-          >One Bulgarian portfolio</Paragraph
-        >
-      </ContentWrapper>
-    </Grid>
+    <StatList
+      items={[
+        { value: "40", unit: "MW", label: "Aggregate power" },
+        { value: "160", unit: "MWh", label: "Storage capacity" },
+        { value: "4", unit: "hours", label: "Nominal duration at rated power" },
+        { value: "04", unit: "assets", label: "One Bulgarian portfolio" },
+      ]}
+    />
   </Section>
 
   <!-- portfolio -->
@@ -142,10 +124,10 @@ const mailto = (subject: string) =>
     <ContentWrapper>
       <Eyebrow>03 / The technology</Eyebrow>
       <Heading id="technology-title">Serious infrastructure.</Heading>
-      <Paragraph slot="column2" variant="small" class="color-faded"
-              >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
-              consistent portfolio foundation.</Paragraph
-            >
+      <Paragraph variant="large" class="color-faded" maxWidth={44}
+        >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
+        consistent portfolio foundation.</Paragraph
+      >
     </ContentWrapper>
     <ContentWrapper
       variant="sticky-content"

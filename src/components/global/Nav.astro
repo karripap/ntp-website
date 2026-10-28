@@ -190,6 +190,17 @@ const home = Astro.url.pathname === "/" ? "" : "/";
         color: var(--text);
         border-bottom-color: var(--border);
       }
+
+      &.is-stuck .wordmark_wrap {
+        color: var(--brand-500);
+      }
+
+      & .wordmark_logo {
+        height: 2rem;
+        @media (width < 30rem) {
+          height: 1.75rem;
+        }
+      }
     }
 
     .nav_progress {

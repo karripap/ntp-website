@@ -2,9 +2,13 @@
   margin-bottom: var(--_margin-bottom);
 }
 
-.heading,
-.text {
+.heading {
   margin-top: var(--_margin-top);
+  max-width: var(--_mw, none);
+}
+
+.text {
+  margin-top: 0rem;
   max-width: var(--_mw, none);
 }
 

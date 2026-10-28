@@ -143,21 +143,25 @@ const mailto = (subject: string) =>
 
   <!-- technology -->
   <Section id="technology" aria-labelledby="technology-title">
-    <ContentWrapper variant="auto-width">
+    <ContentWrapper>
       <Eyebrow>03 / The technology</Eyebrow>
       <Heading id="technology-title">Serious infrastructure.</Heading>
       <Paragraph slot="column2" variant="small" class="color-faded"
-        >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
-        consistent portfolio foundation.</Paragraph
-      >
+              >Liquid-cooled storage.<br />Utility-scale power conversion.<br />A
+              consistent portfolio foundation.</Paragraph
+            >
     </ContentWrapper>
-    <ContentWrapper variant="columns" reverse>
-      <Accordion single={false}>
+    <ContentWrapper
+      variant="sticky-content"
+      class="gap-small"
+      column2Class="align-self-center"
+    >
+      <TechnologyDrawing tag="0.25C" model="CRRC CESS-L5016-0.25C" />
+      <Accordion slot="column2" single={false} openFirst={true}>
         <AccordionItem
           variant="card"
           index="01"
           heading="Liquid-cooled battery storage"
-          open={true}
         >
           <Paragraph
             >CRRC CESS-L5016-0.25C centralized energy storage systems form the
@@ -215,11 +219,6 @@ const mailto = (subject: string) =>
           </ButtonWrapper>
         </AccordionItem>
       </Accordion>
-      <TechnologyDrawing
-        slot="column2"
-        tag="0.25C"
-        model="CRRC CESS-L5016-0.25C"
-      />
     </ContentWrapper>
   </Section>
 

@@ -4,7 +4,7 @@ export const SITE_NAME = "NTP Consulting";
 export const SITE_DESCRIPTION =
   "NTP Consulting's 160 MWh battery portfolio in Bulgaria. Four grid-connected battery sites with 40 MW of combined power.";
 /** Canonical origin. Resolves canonical URLs, social images, and the sitemap. */
-export const SITE_URL = "https://ntp-energy-160.kpapalezova.chatgpt.site";
+export const SITE_URL = "https://ntp.consulting";
 /** BCP 47 locale tag used to format dates and numbers. */
 export const SITE_LOCALE = "en-GB";
 /** Routes excluded from search and the sitemap. Surrounding slashes are ignored. */

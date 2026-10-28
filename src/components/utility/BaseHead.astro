@@ -16,7 +16,13 @@ const {
 
 const isNoindex = noindex ?? isNoindexRoute(Astro.url.pathname);
 
-const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+// The homepage leads with the brand; other pages lead with their own title.
+const isHome = Astro.url.pathname === "/";
+const pageTitle = !title
+  ? SITE_NAME
+  : isHome
+    ? `${SITE_NAME} | ${title}`
+    : `${title} | ${SITE_NAME}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
 ---

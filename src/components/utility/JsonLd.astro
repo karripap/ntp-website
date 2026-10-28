@@ -1,0 +1,16 @@
+---
+/** Structured data for search and answer engines, rendered as JSON-LD. */
+interface Props {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** A schema.org object or `@graph` document. */
+  data: Record<string, unknown>;
+}
+
+const { render = true, data } = Astro.props;
+
+// Escape `<` so content can never close the script element early.
+const json = JSON.stringify(data).replace(/</g, "\\u003c");
+---
+
+{render && <script type="application/ld+json" is:inline set:html={json} />}

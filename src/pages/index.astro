@@ -18,17 +18,28 @@ import SpecList from "@/components/content/SpecList.astro";
 import StatList from "@/components/content/StatList.astro";
 import battery_landscape from "@/assets/images/battery-landscape.png";
 import { PORTFOLIO_ASSETS, PORTFOLIO_LOCATIONS } from "@/data/portfolio.ts";
-import { CONTACT_EMAIL } from "@/consts.ts";
+import { CONTACT_EMAIL, SITE_NAME } from "@/consts.ts";
+import { homeSchema } from "@/data/schema.ts";
+import JsonLd from "@/components/utility/JsonLd.astro";
+
+const title = "160 MWh Battery Portfolio in Bulgaria";
+const description =
+  "Four grid-connected battery storage sites across three regions of Bulgaria: 40 MW of combined power and 160 MWh of capacity. Explore the NTP Consulting portfolio.";
 
 const mailto = (subject: string) =>
   `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 ---
 
 <Layout
-  title="160 MWh Battery Portfolio in Bulgaria"
-  description="Four grid-connected battery storage sites across three regions of Bulgaria: 40 MW of combined power and 160 MWh of capacity. Explore the NTP Consulting portfolio."
+  title={title}
+  description={description}
   overlap={true}
 >
+  <JsonLd
+    slot="head"
+    data={homeSchema({ title: `${SITE_NAME} | ${title}`, description })}
+  />
+
   <!-- hero -->
   <Section
     theme="dark"

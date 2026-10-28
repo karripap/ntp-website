@@ -121,7 +121,6 @@ const mailto = (subject: string) =>
   <Section
     id="capacity"
     class="background-2"
-    containerClass="max-width-small"
     aria-labelledby="capacity-title"
   >
     <ContentWrapper variant="columns">
@@ -129,13 +128,10 @@ const mailto = (subject: string) =>
       <Heading id="capacity-title" variant="h1"
         >Why invest in<br /> battery storage<br /> in Bulgaria</Heading
       >
-      <Paragraph variant="large" class="color-faded"
-        >160 MWh is more than a number.<br /> It is power with time on its side.</Paragraph
-      >
-      <Paragraph variant="small" class="color-faded" maxWidth={44}
-        >At the portfolio’s rated 40 MW, that means four hours of nominal
-        storage. Explore how the same energy capacity translates at a lower
-        output.</Paragraph
+      <Paragraph variant="large" class="color-faded" maxWidth={44}
+        >160 MWh is more than a number. It is power with time on its side. At
+        the portfolio’s rated 40 MW, that means four hours of nominal storage.
+        Explore how the same energy capacity translates at a lower output.</Paragraph
       >
       <CapacityCalculator slot="column2" class="theme-brand" />
     </ContentWrapper>

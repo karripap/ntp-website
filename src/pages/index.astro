@@ -59,7 +59,7 @@ const mailto = (subject: string) =>
     />
     <Overlay slot="background" variant="gradient" strength={55} />
     <ContentWrapper class="parallax-drift">
-      <Heading tag="h1" variant="display"
+      <Heading variant="display" maxWidth={16} tag="h1"
         >160 MWh battery portfolio<br /> in Bulgaria</Heading
       >
       <Paragraph variant="large" maxWidth={36}
@@ -95,7 +95,7 @@ const mailto = (subject: string) =>
   <Section id="portfolio" aria-labelledby="portfolio-title" paddingTop="small" paddingBottom="small">
     <ContentWrapper centered={true}>
       <Eyebrow>01 / The portfolio</Eyebrow>
-      <Heading id="portfolio-title"
+      <Heading id="portfolio-title" variant="h1"
         >Four sites in three<br /> regions of Bulgaria</Heading
       >
       <Paragraph class="color-faded" maxWidth={64}
@@ -137,14 +137,14 @@ const mailto = (subject: string) =>
   <Section id="technology" aria-labelledby="technology-title" paddingTop="small" paddingBottom="small">
     <ContentWrapper>
       <Eyebrow>03 / The technology</Eyebrow>
-      <Heading id="technology-title">Serious infrastructure.</Heading>
+      <Heading id="technology-title">Serious infrastructure</Heading>
     </ContentWrapper>
     <ContentWrapper
       variant="sticky-content"
       class="gap-small"
       column2Class="align-self-start"
     >
-      <TechnologyDrawing tag="0.25C" model="CRRC CESS-L5016-0.25C" />
+      <TechnologyDrawing tag="0.25C" model="CRRC CESS-L5016-0.25C" class="parallax-float" />
       <Accordion slot="column2" single={false} openFirst={true}>
         <AccordionItem
           variant="card"

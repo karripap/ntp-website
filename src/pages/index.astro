@@ -67,6 +67,7 @@ const mailto = (subject: string) =>
     paddingBottom="small"
     containerClass="max-width-small"
     aria-label="Portfolio at a glance"
+    class="background-2"
   >
     <StatList
       items={[
@@ -79,7 +80,7 @@ const mailto = (subject: string) =>
   </Section>
 
   <!-- portfolio -->
-  <Section id="portfolio" aria-labelledby="portfolio-title">
+  <Section id="portfolio" aria-labelledby="portfolio-title" paddingTop="small" paddingBottom="small">
     <ContentWrapper centered={true}>
       <Eyebrow>01 / The portfolio</Eyebrow>
       <Heading id="portfolio-title"
@@ -104,6 +105,8 @@ const mailto = (subject: string) =>
     id="capacity"
     class="background-2"
     aria-labelledby="capacity-title"
+    paddingTop="small"
+    paddingBottom="small"
   >
     <ContentWrapper variant="columns">
       <Eyebrow>02 / The capacity</Eyebrow>
@@ -120,7 +123,7 @@ const mailto = (subject: string) =>
   </Section>
 
   <!-- technology -->
-  <Section id="technology" aria-labelledby="technology-title">
+  <Section id="technology" aria-labelledby="technology-title" paddingTop="small" paddingBottom="small">
     <ContentWrapper>
       <Eyebrow>03 / The technology</Eyebrow>
       <Heading id="technology-title">Serious infrastructure.</Heading>

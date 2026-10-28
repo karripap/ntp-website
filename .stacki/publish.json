@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "defaultTarget": "all",
+  "githubAccount": "",
+  "hosting": {
+    "provider": "vercel",
+    "organizationId": "team_63dBWb5MXaf8VZLTHesK6qd2",
+    "projectId": "prj_6NR8ucfl59nVuUbN3wXaAhUwd6jz"
+  },
+  "buildScript": "build",
+  "beforePublish": [],
+  "afterPublish": []
+}

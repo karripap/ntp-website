@@ -127,11 +127,12 @@ const home = Astro.url.pathname === "/" ? "" : "/";
     sections.forEach((section) => observer.observe(section));
   }
 
-  if (progress) {
+  if (nav) {
     let queued = false;
     const update = () => {
+      nav.classList.toggle("is-stuck", scrollY > 8);
       const max = document.documentElement.scrollHeight - innerHeight;
-      progress.style.setProperty(
+      progress?.style.setProperty(
         "--_progress",
         String(max > 0 ? scrollY / max : 0),
       );
@@ -164,17 +165,30 @@ const home = Astro.url.pathname === "/" ? "" : "/";
       border-bottom: var(--border-width) solid var(--border);
 
       &.overlap {
-        position: absolute;
-        inset: 1.625rem 0 auto;
+        position: fixed;
+        inset: 0 0 auto;
+        padding-top: 1.625rem;
         background-color: transparent;
         color: var(--light-200);
-        border-bottom: 0;
+        border-bottom: var(--border-width) solid transparent;
+        transition:
+          padding-top var(--hover-duration) var(--hover-ease),
+          background-color var(--hover-duration) var(--hover-ease),
+          border-color var(--hover-duration) var(--hover-ease),
+          color var(--hover-duration) var(--hover-ease);
         @media (width < 64rem) {
-          top: 1.125rem;
+          padding-top: 1.125rem;
         }
         @media (width < 30rem) {
-          top: 0.9375rem;
+          padding-top: 0.9375rem;
         }
+      }
+
+      &.overlap.is-stuck {
+        padding-top: 0;
+        background-color: var(--background);
+        color: var(--text);
+        border-bottom-color: var(--border);
       }
     }
 

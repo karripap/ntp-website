@@ -393,7 +393,7 @@ body {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
 }
 
 a {
